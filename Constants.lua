@@ -132,15 +132,9 @@ Buffalo.ui.backdrops = { };
 
 Buffalo.ui.backdrops.ClassFrame = {
 	bgFile = "Interface\\TalentFrame\\WarriorProtection-Topleft",
-	edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",
-	edgeSize = 64,
-	tileEdge = true,
 };
 Buffalo.ui.backdrops.GeneralFrame = {
 	bgFile = "Interface\\TalentFrame\\RogueCombat-Topleft",
-	edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",
-	edgeSize = 64,
-	tileEdge = true,
 };
 Buffalo.ui.backdrops.Slider = {
 	edgeFile = "Interface\\DialogFrame\\UI-DialogBox-TestWatermark-Border",
@@ -150,57 +144,36 @@ Buffalo.ui.backdrops.Slider = {
 
 Buffalo.ui.backdrops.DruidFrame = {
 	bgFile = "Interface\\TalentFrame\\ShamanRestoration-Topleft",
-	edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",
-	edgeSize = 64,
-	tileEdge = true,
 	tile = 0,
 	tileSize = 900,
 };
 Buffalo.ui.backdrops.MageFrame = {
 	bgFile = "Interface\\TalentFrame\\MageFrost-Topleft",
-	edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",
-	edgeSize = 64,
-	tileEdge = true,
 	tile = 0,
 	tileSize = 900,
 };
 Buffalo.ui.backdrops.PriestFrame = {
 	bgFile = "Interface\\TalentFrame\\PriestDiscipline-Topleft",
-	edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",
-	edgeSize = 64,
-	tileEdge = true,
 	tile = 0,
 	tileSize = 900,
 };
 Buffalo.ui.backdrops.ShadowPriestFrame = {
 	bgFile = "Interface\\TalentFrame\\PriestShadow-Topleft",
-	edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",
-	edgeSize = 64,
-	tileEdge = true,
 	tile = 0,
 	tileSize = 900,
 };
 Buffalo.ui.backdrops.WarlockFrame = {
 	bgFile = "Interface\\TalentFrame\\WarlockCurses-Topleft",
-	edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",
-	edgeSize = 64,
-	tileEdge = true,
 	tile = 0,
 	tileSize = 900,
 };
 Buffalo.ui.backdrops.OpenRaidFrame = {
 	bgFile = "Interface\\TalentFrame\\PaladinCombat-Topleft",
-	edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",
-	edgeSize = 64,
-	tileEdge = true,
 	tile = 0,
 	tileSize = 900,
 };
 Buffalo.ui.backdrops.ClosedRaidFrame = {
 	bgFile = "Interface\\TalentFrame\\WarriorFury-Topleft",
-	edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",
-	edgeSize = 64,
-	tileEdge = true,
 	tile = 0,
 	tileSize = 900,
 };
@@ -239,4 +212,3 @@ Buffalo.raidmodes.setup = {
 Buffalo.raidmodes.OpenRaidRequiresPromotion		= true;		-- true: (switching to) Raidmode 1 requires promotion
 Buffalo.raidmodes.ClosedRaidRequiresPromotion	= true;		-- true: (switching to) Raidmode 2 requires promotion
 Buffalo.raidmodes.DisplayRaidModeChanges		= false;	-- true: show a local message when raid mode changes. Can be spammy.
-
