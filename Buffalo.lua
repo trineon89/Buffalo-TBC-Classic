@@ -37,6 +37,7 @@ Buffalo.vars.PlayerIsBuffClass					= false;
 Buffalo.vars.PlayerNameAndRealm					= "";
 Buffalo.vars.PlayerClass						= UnitClass("player");
 Buffalo.vars.PlayerFaction						= UnitFactionGroup("player");
+Buffalo.vars.PlayerRace						= select(2, UnitRace("player"));
 
 Buffalo.vars.InitializationComplete				= false;
 Buffalo.vars.InitializationRetryTimer			= 0;
@@ -51,6 +52,19 @@ Buffalo.vars.SyncBuff							= nil;
 Buffalo.vars.SyncGroup							= nil;
 
 Buffalo.vars.OrderedBuffGroups					= { };		-- [buff index] = { PRIORITY, NAME, MASK, ICONID } 
+
+local function setActionButtonIcon(button, iconId)
+	if not button then
+		return;
+	end;
+
+	local icon = button.icon or _G[button:GetName().."Icon"];
+	if icon then
+		icon:SetTexture(iconId);
+	else
+		button:SetNormalTexture(iconId);
+	end;
+end;
 
 
 -- Configuration:
@@ -1434,9 +1448,8 @@ function Buffalo:initializeBuffSettingsUI(firstTimeInitialization)
 		local entry = _G[buttonName];
 		if not entry then
 			entry = CreateFrame("Button", buttonName, BuffaloConfigFrameSelf, "BuffaloGroupButtonTemplate");
-			entry:SetNormalTexture(Buffalo.spells.personal[rowNumber].IconID);
-			entry:SetPushedTexture(Buffalo.spells.personal[rowNumber].IconID);
 		end;
+		setActionButtonIcon(entry, Buffalo.spells.personal[rowNumber].IconID);
 
 		if Buffalo.spells.personal[rowNumber].Learned then
 			entry:SetAlpha(Buffalo.ui.alpha.Disabled);
@@ -1489,8 +1502,7 @@ function Buffalo:initializeBuffSettingsUI(firstTimeInitialization)
 			local entry = CreateFrame("Button", buttonName, BuffaloClassConfigFrameClass, "BuffaloClassButtonTemplate");
 			entry:SetAlpha(Buffalo.ui.alpha.Enabled);
 			entry:SetPoint("TOPLEFT", posX, posY);
-			entry:SetNormalTexture(classInfo.IconID);
-			entry:SetPushedTexture(classInfo.IconID);
+			setActionButtonIcon(entry, classInfo.IconID);
 
 			posX = posX + colWidth;
 		end;
@@ -1516,9 +1528,8 @@ function Buffalo:initializeBuffSettingsUI(firstTimeInitialization)
 			local entry = _G[buttonName];
 			if not entry then
 				entry = CreateFrame("Button", buttonName, BuffaloClassConfigFrameClass, "BuffaloBuffButtonTemplate");
-				entry:SetNormalTexture(Buffalo.spells.group[rowNumber].IconID);
-				entry:SetPushedTexture(Buffalo.spells.group[rowNumber].IconID);
 			end;
+			setActionButtonIcon(entry, Buffalo.spells.group[rowNumber].IconID);
 
 			if Buffalo.spells.group[rowNumber].Learned then
 				entry:SetAlpha(Buffalo.ui.alpha.Disabled);
@@ -1563,9 +1574,8 @@ function Buffalo:initializePersonalGroupBuffs()
 				local rowBtn = _G[buttonName];
 				if not rowBtn then
 					rowBtn = CreateFrame("Button", buttonName, BuffaloConfigFramePersonal, "BuffaloMiniButtonTemplate");
-					rowBtn:SetNormalTexture(spellInfo.IconID);
-					rowBtn:SetPushedTexture(spellInfo.IconID);
 				end;
+				setActionButtonIcon(rowBtn, spellInfo.IconID);
 				rowBtn:SetPoint("TOPLEFT", posX - 60, posY-8);
 				if spellInfo.Learned then
 					rowBtn:Show();
@@ -1579,9 +1589,8 @@ function Buffalo:initializePersonalGroupBuffs()
 			local entry = _G[buttonName];
 			if not entry then
 				entry = CreateFrame("Button", buttonName, BuffaloConfigFramePersonal, "BuffaloGroupButtonTemplate");
-				entry:SetNormalTexture(spellInfo.IconID);
-				entry:SetPushedTexture(spellInfo.IconID);
 			end;
+			setActionButtonIcon(entry, spellInfo.IconID);
 			entry:SetAlpha(Buffalo.ui.alpha.Disabled);
 			entry:SetPoint("TOPLEFT", posX, posY);
 
@@ -1628,8 +1637,7 @@ function Buffalo:initializeRaidGroupBuffs()
 		end;
 
 		fButton:SetPoint("TOPLEFT", posX, posY);
-		fButton:SetNormalTexture(Buffalo.vars.OrderedBuffGroups[buffIndex].iconid);
-		fButton:SetPushedTexture(Buffalo.vars.OrderedBuffGroups[buffIndex].iconid);
+		setActionButtonIcon(fButton, Buffalo.vars.OrderedBuffGroups[buffIndex].iconid);
 		fButton:SetScript("OnClick", nil);
 		fButton:Show();
 
@@ -2628,6 +2636,7 @@ end
 function Buffalo_onLoad()
 	local _, classname = UnitClass("player");
 	Buffalo.vars.PlayerClass = classname;
+	Buffalo.vars.PlayerRace = select(2, UnitRace("player"));
 	Buffalo.vars.PlayerNameAndRealm = Buffalo:getPlayerAndRealm("player");
 
 	if not Buffalo.classes[classname] or not Buffalo.classes[classname].spells then
