@@ -6,7 +6,7 @@
 		<Size>
 			<AbsDimension x="32" y="32" />
 		</Size>
-		<NormalTexture file="Interface\PaperDoll\UI-Backpack-EmptySlot" />
+		<NormalTexture file="Interface\Buttons\UI-Quickslot2" />
 		<Scripts>
 			<OnLoad>
 				self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
@@ -22,7 +22,7 @@
 		<Size>
 			<AbsDimension x="16" y="16" />
 		</Size>
-		<NormalTexture file="Interface\PaperDoll\UI-Backpack-EmptySlot" />
+		<NormalTexture file="Interface\Buttons\UI-Quickslot2" />
 		<Scripts>
 			<OnLoad>
 				self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
