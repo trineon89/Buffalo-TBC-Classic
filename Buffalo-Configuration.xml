@@ -11,11 +11,6 @@
 			<OnLoad>
 				self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
 				self:SetHighlightTexture(nil);
-				local highlight = self:GetHighlightTexture();
-				if highlight then
-					highlight:SetTexture(nil);
-					highlight:Hide();
-				end;
 			</OnLoad>
 			<OnClick>
 				Buffalo:onConfigurationBuffClick(self);
@@ -33,11 +28,6 @@
 			<OnLoad>
 				self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
 				self:SetHighlightTexture(nil);
-				local highlight = self:GetHighlightTexture();
-				if highlight then
-					highlight:SetTexture(nil);
-					highlight:Hide();
-				end;
 			</OnLoad>
 			<OnClick>
 				Buffalo:onToggleRowBuffsClick(self);
