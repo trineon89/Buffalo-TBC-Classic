@@ -10,6 +10,7 @@
 		<Scripts>
 			<OnLoad>
 				--self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
+				self:SetHighlightTexture(nil);
 			</OnLoad>
 			<OnClick>
 				--	TODO: What should we do when clicking a class? Enable all buffs?
@@ -26,6 +27,7 @@
 		<Scripts>
 			<OnLoad>
 				self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
+				self:SetHighlightTexture(nil);
 			</OnLoad>
 			<OnClick>
 				Buffalo:onClassConfigClick(self);

@@ -10,6 +10,7 @@
 		<Scripts>
 			<OnLoad>
 				self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
+				self:SetHighlightTexture(nil);
 			</OnLoad>
 			<OnClick>
 				Buffalo:onConfigurationBuffClick(self);
@@ -26,6 +27,7 @@
 		<Scripts>
 			<OnLoad>
 				self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
+				self:SetHighlightTexture(nil);
 			</OnLoad>
 			<OnClick>
 				Buffalo:onToggleRowBuffsClick(self);
