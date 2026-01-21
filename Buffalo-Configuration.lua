@@ -39,6 +39,7 @@ Buffalo["spellnames"] = {
 		["PrayerOfShadowProtection"]	= GetSpellInfo(27683),
 		["InnerFire"]					= GetSpellInfo(10952),
 		["ShadowForm"]					= GetSpellInfo(15473),
+		["Shadowguard"]				= GetSpellInfo(25477),
 	},
 	["warlock"] = {
 		["DemonSkin"]					= GetSpellInfo(696),
@@ -247,7 +248,14 @@ Buffalo["classes"] = {
 				["Classmask"]	= Buffalo.classmasks.Priest,
 				["MaxSpellId"]	= 10952,
 				["Priority"]	= 12, 
-			};
+			},
+			[Buffalo.spellnames.priest.Shadowguard] = {
+				["Bitmask"]		= 0x000400,
+				["Classmask"]	= Buffalo.classmasks.Priest,
+				["MaxSpellId"]	= 25477,
+				["Priority"]	= 10,
+				["Race"]		= "Troll",
+			},
 		},
 	},
 	["ROGUE"] = {
@@ -504,6 +512,11 @@ function Buffalo:updateSpellMatrixByClass(classname)
 				end;
 			end;
 
+			if spellInfo.Race and Buffalo.vars.PlayerRace ~= spellInfo.Race then
+				enabled = nil;
+				learned = nil;
+			end;
+
 		end;
 
 		spellInfo.Enabled = enabled;
@@ -640,4 +653,3 @@ function Buffalo:initializeAssignedGroupDefaults()
 
 	return assignedGroupBuffs;
 end;
-

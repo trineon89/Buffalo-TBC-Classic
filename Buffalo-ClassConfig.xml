@@ -6,10 +6,11 @@
 		<Size>
 			<AbsDimension x="32" y="32" />
 		</Size>
-		<NormalTexture file="Interface\PaperDoll\UI-Backpack-EmptySlot" />
+		<NormalTexture file="Interface\Buttons\UI-Quickslot2" />
 		<Scripts>
 			<OnLoad>
 				--self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
+				self:SetHighlightTexture(nil);
 			</OnLoad>
 			<OnClick>
 				--	TODO: What should we do when clicking a class? Enable all buffs?
@@ -22,10 +23,11 @@
 		<Size>
 			<AbsDimension x="24" y="24" />
 		</Size>
-		<NormalTexture file="Interface\PaperDoll\UI-Backpack-EmptySlot" />
+		<NormalTexture file="Interface\Buttons\UI-Quickslot2" />
 		<Scripts>
 			<OnLoad>
 				self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
+				self:SetHighlightTexture(nil);
 			</OnLoad>
 			<OnClick>
 				Buffalo:onClassConfigClick(self);
