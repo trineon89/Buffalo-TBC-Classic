@@ -1,0 +1,223 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Script file="Buffalo-Configuration.lua" />
+
+	<!-- Frame template for one buff column -->
+	<Button name="BuffaloGroupButtonTemplate" inherits="ActionButtonTemplate" frameStrata="HIGH" hidden="false" virtual="true">
+		<Size>
+			<AbsDimension x="32" y="32" />
+		</Size>
+		<NormalTexture file="Interface\PaperDoll\UI-Backpack-EmptySlot" />
+		<Scripts>
+			<OnLoad>
+				self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
+			</OnLoad>
+			<OnClick>
+				Buffalo:onConfigurationBuffClick(self);
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<!-- Frame template for one label button -->
+	<Button name="BuffaloMiniButtonTemplate" inherits="ActionButtonTemplate" frameStrata="HIGH" hidden="false" virtual="true">
+		<Size>
+			<AbsDimension x="16" y="16" />
+		</Size>
+		<NormalTexture file="Interface\PaperDoll\UI-Backpack-EmptySlot" />
+		<Scripts>
+			<OnLoad>
+				self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
+			</OnLoad>
+			<OnClick>
+				Buffalo:onToggleRowBuffsClick(self);
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<!-- Frame template for one buffer (one buff in one group) -->
+	<Button name="GroupBuffTemplate" hidden="true" virtual="true">
+		<Size>
+			<AbsDimension x="100" y="20" />
+		</Size>
+		<Layers>
+			<Layer>
+				<FontString name="$parentText" justifyH="LEFT" inherits="GameFontNormal">
+					<Size>
+						<AbsDimension x="100" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnClick>
+				PlaySound(882, "Master")
+				Buffalo:onBuffGroupClick(self)
+			</OnClick>
+			<OnEnter>
+				_G[self:GetName().."BG"]:SetVertexColor(1.0, 1.0, 1.0, 1.0)
+			</OnEnter>
+			<OnLeave>
+				_G[self:GetName().."BG"]:SetVertexColor(0.7, 0.7, 0.7, 0.0)
+			</OnLeave>
+			<OnLoad>
+				self:GetScript("OnLeave")(self)
+				self:RegisterForClicks("LeftButtonDown", "RightButtonDown");
+			</OnLoad>
+		</Scripts>
+		<NormalTexture name="$parentBG">
+			<Color r="0.8" g="0.7" b="0.2" a="0.4"/>
+		</NormalTexture>
+	</Button>
+	
+	<!-- Configuration frame: main entry -->
+	<Frame name="BuffaloConfigFrame" parent="UIParent" toplevel="true" inherits="BackdropTemplate" hidden="true" frameStrata="MEDIUM">
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
+			<KeyValue key="backdropColor" value="BLACK" type="global"/>
+			<KeyValue key="backdropBorderColor" value="WHITE" type="global"/>
+		</KeyValues>
+		<Size x="950" y="550" />
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Layers>
+			<Layer>
+				<Texture name="$parentHeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="880" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentCaption" inherits="GameFontNormal" text="Assign buffs for specific groups by left/right clicking the icons.">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentHeaderTexture">
+							<Offset>
+								<AbsDimension x="0" y="-14"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+
+		<Frames>
+			<!-- Raid buff rows are inserted here -->
+			<Frame name="$parentPersonal" hidden="false">
+				<Size x="900" y="450" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="0" y="-80" relativeTo="BuffaloConfigFrame" />
+				</Anchors>
+			</Frame>
+
+			<Frame name="$parentRaid" hidden="false">
+				<Size x="900" y="450" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="0" y="-80" relativeTo="BuffaloConfigFrame" />
+				</Anchors>
+			</Frame>
+
+			<!-- Self buff row is inserted here. All controls below are positioned relative tho this. -->
+			<Frame name="$parentSelf" hidden="false">
+				<Size x="900" y="42" />
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" x="0" y="60" relativeTo="BuffaloConfigFrame" />
+				</Anchors>
+			</Frame>
+
+			<!-- Class config button -->
+			<Button name="$parentClassConfigButton" inherits="UIPanelButtonTemplate" movable="true" text="Class options">
+				<Size>
+					<AbsDimension x="120" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM" relativeTo="BuffaloConfigFrame">
+						<Offset x="-130" y="24" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>Buffalo:openClassConfigDialogue();</OnClick>
+				</Scripts>
+			</Button>
+			<!-- General config button -->
+			<Button name="$parentGeneralConfigButton" inherits="UIPanelButtonTemplate" movable="true" text="General options">
+				<Size>
+					<AbsDimension x="120" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM" relativeTo="BuffaloConfigFrame">
+						<Offset x="0" y="24" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>Buffalo:openGeneralConfigDialogue();</OnClick>
+				</Scripts>
+			</Button>
+			<!-- Close button -->
+			<Button name="$parentCloseButton" inherits="UIPanelButtonTemplate" movable="true" text="Close">
+				<Size>
+					<AbsDimension x="120" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM" relativeTo="BuffaloConfigFrame">
+						<Offset x="130" y="24" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>Buffalo:onConfigurationCloseButtonClick();</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="BuffaloVersionString" inherits="GameFontNormal" text="Buffalo x - by y">
+					<Anchors>
+						<Anchor point="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="8"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<Color r="0.4" g="0.3" b="0.1" a="1.0"/>
+				</FontString>
+			</Layer>
+		</Layers>
+		
+		<Scripts>
+			<OnLoad inherit="prepend">
+				self:SetMovable(true)
+				self:SetUserPlaced(true)
+				self:RegisterForDrag("LeftButton")
+				tinsert(UISpecialFrames, self:GetName());
+			</OnLoad>
+			<OnShow>
+				PlaySound(Buffalo.sounds.IG_MAINMENU_OPEN);
+			</OnShow>
+			<OnHide>
+				PlaySound(Buffalo.sounds.IG_MAINMENU_CLOSE);
+			</OnHide>
+			<OnDragStart>
+				if not BUFFALO_SubConfigOpen then
+					self:StartMoving()
+				end;
+			</OnDragStart>
+			<OnDragStop>
+				if not BUFFALO_SubConfigOpen then
+					self:StopMovingOrSizing()
+				end;
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+</Ui>

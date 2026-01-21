@@ -1,0 +1,64 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Script file="Buffalo.lua" />
+
+	<Button name="BuffButton" inherits="SecureActionButtonTemplate" parent="UIParent" toplevel="true" hidden="false" frameStrata="LOW" movable="true">
+		<Size>
+			<AbsDimension x="32" y="32" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="100" />
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+			<OnLoad>
+				self:EnableMouse(true);
+				self:EnableKeyboard(false);
+				self:RegisterForDrag("LeftButton");
+				self:RegisterForClicks("AnyUp", "AnyDown")
+
+				self:SetScript("PreClick", Buffalo_onBeforeBuffClick);
+				self:SetScript("PostClick", Buffalo_onAfterBuffClick);
+
+				self:SetAttribute("*type1", "spell");
+				self:SetAttribute("unit", nil);
+				self:SetAttribute("spell", nil);
+				self:SetAttribute("item", nil);
+				self:SetAttribute("target-slot", nil);
+			</OnLoad>
+			<OnDragStart>
+				if (button == "LeftButton" and IsShiftKeyDown()) then
+					self:StartMoving();
+				end
+			</OnDragStart>
+			<OnDragStop>
+				self:StopMovingOrSizing();
+				Buffalo_repositionateButton(self);
+			</OnDragStop>
+		</Scripts>
+	</Button>
+
+
+	<!-- Dummy event frame -->
+	<Frame name="BuffaloEventFrame">
+		<Scripts>
+			<OnLoad>
+				if (Buffalo_onLoad) then
+					Buffalo_onLoad();
+				end
+			</OnLoad>
+			<OnEvent>
+				if (Buffalo_onEvent) then
+				Buffalo_onEvent(self, event, ...);
+				end
+			</OnEvent>
+			<OnUpdate>
+				if (Buffalo_onTimer) then
+					Buffalo_onTimer(elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+</Ui>
